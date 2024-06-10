@@ -39,8 +39,8 @@ ffuf -w [path_to_wordlist]:FUZZ -u http://[domain_or_IP]:[port]/ -H 'Host: FUZZ.
 
 COMMON FILTER OPTIONS
 
-# Filter HTTP status codes from response
+# Filter HTTP status codes from the response
 -fc [http_status_code]
 
-# Filter HTTP response size
+# Filter HTTP response size from the response
 -fs [hhtp_response_size]
