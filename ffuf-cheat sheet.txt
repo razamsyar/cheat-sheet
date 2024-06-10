@@ -1,0 +1,46 @@
+BASIC FUZZING:
+
+# Directory fuzzing
+ffuf -w [path_to_wordlist]:FUZZ -u http://[domain_or_IP]:[port]/FUZZ -ic
+
+# Extension fuzzing
+ffuf -w [path_to_wordlist]:FUZZ -u http://[domain_or_IP]:[port]/[directory]/indexFUZZ -ic
+
+# Page fuzzing
+ffuf -w [path_to_wordlist]:FUZZ -u http://[domain_or_IP]:[port]/[directory]/FUZZ.[extension] -ic
+
+# Recursive fuzzing
+ffuf -w [path_to_wordlist]:FUZZ -u http://[domain_or_IP]:[port]/FUZZ -recursion -recursion-depth [depth] -e .[extension] -v -ic
+
+
+PARAMETER FUZZING:
+
+# GET request fuzzing
+ffuf -w [path_to_wordlist]:FUZZ -u http://[domain_or_IP]:[port]/[page]?FUZZ=key -fs [valueToFilter] -ic
+
+# POST request fuzzing
+ffuf -w [path_to_wordlist]:FUZZ -u http://[domain_or_IP]:[port]/[page] -X POST -d 'FUZZ=key' -H 'Content-Type: application/x-www-form-urlencoded' -ic
+
+# Value fuzzing
+ffuf -w [path_to_wordlist]:FUZZ -u http://[domain]:[port]/[page] -X [requestType] -d '[parameter]=FUZZ' -H 'Content-Type: application/x-www-form-urlencoded' -fs [valueToFilter] -ic
+
+
+SUBDOMAIN VHOST FUZZING:
+
+# Subdomain fuzzing
+ffuf -w [path_to_wordlist]:FUZZ -u http://FUZZ.[domain_or_IP]:[port]/ -ic
+
+# VHost fuzzing
+ffuf -w [path_to_wordlist]:FUZZ -u http://[domain_or_IP]:[port]/ -H 'Host: FUZZ.[domain_or_IP]' -ic
+
+# VHost fuzzing & filter incorrect results
+ffuf -w [path_to_wordlist]:FUZZ -u http://[domain_or_IP]:[port]/ -H 'Host: FUZZ.[domain_or_IP]' [filterFlag] [value] -ic
+
+
+COMMON FILTER OPTIONS
+
+# Filter HTTP status codes from response
+-fc [http_status_code]
+
+# Filter HTTP response size
+-fs [hhtp_response_size]
